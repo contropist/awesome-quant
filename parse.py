@@ -12,7 +12,7 @@ g = Github(os.environ['GITHUB_ACCESS_TOKEN'])
 
 
 def extract_repo(url):
-    reu = re.compile('^https://github.com/([\w-]+/[-\w\.]+)$')
+    reu = re.compile(r'^https://github.com/([\w-]+/[-\w\.]+)$')
     m = reu.match(url)
     if m:
         return m.group(1)
@@ -63,8 +63,8 @@ class Project(Thread):
 projects = []
 
 with open('README.md', 'r', encoding='utf8') as f:
-    ret = re.compile('^(#+) (.*)$')
-    rex = re.compile('^\s*- \[(.*)\]\((.*)\) - (.*)$')
+    ret = re.compile(r'^(#+) (.*)$')
+    rex = re.compile(r'^\s*- \[(.*)\]\((.*)\) - (.*)$')
     m_titles = []
     last_head_level = 0
     for line in f:
@@ -92,5 +92,5 @@ while True:
 
 projects = [p.regs for p in projects]
 df = pd.DataFrame(projects)
-df.to_csv('projects.csv', index=False)
+df.to_csv('site/projects.csv', index=False)
 # df.to_markdown('projects.md', index=False)
